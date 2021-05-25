@@ -2,21 +2,31 @@
 import 'react-native-gesture-handler';
 import React,{ Component } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import SideDrawerCustom from './utils/customDrawer';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
-import VideosScreen from './components/home/videos';
-import AuthScreen from './components/auth';
-import HomeScreen from './components/home/articles';
+//import VideosScreen from './components/home/videos';
+import { Colors } from './utils/tools';
+
 
 
 const Drawer= createDrawerNavigator();
-const Stack= createStackNavigator();
+
+import { Stack, HomeStack, VideosStack } from './routes/stacks';
+import AuthScreen from './components/auth';
+//import ProfileScreen from '../src/components/user/profile';
+import ProfileScreen from './components/user/profile/profile';
+
 const MainDrawer = () => (
-  <Drawer.Navigator>
-    <Drawer.Screen name="Home" component={HomeScreen}/>
-    <Drawer.Screen name="Videos" component={VideosScreen}/>
+  <Drawer.Navigator
+    drawerContent={(props) => <SideDrawerCustom {...props}/>}
+    drawerStyle={{backgroundColor: Colors.black}}
+  >
+    <Drawer.Screen name="Home" component={HomeStack}/>
+    <Drawer.Screen name="Videos" component={VideosStack}/>
+    <Drawer.Screen name="Profile" component={ProfileScreen}/>
   </Drawer.Navigator>
 )
 
@@ -33,6 +43,7 @@ class App extends Component{
               <Stack.Screen
                 name="Main"
                 component={ MainDrawer }
+                options ={{headerShown:false}}
               />
             </>
           :

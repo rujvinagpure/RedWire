@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {Button} from 'react-native-elements';
-import {Colors} from './tools';
+import {Colors, LogoText} from './tools';
 const SideDrawerCustom= (props )=>{
     const mainOptions =[
         {title: 'News', location:"Home"},
@@ -13,7 +13,7 @@ const SideDrawerCustom= (props )=>{
     return (
         <DrawerContentScrollView{...props}>
         <View>
-        <Text>  Redwire  </Text>
+       <LogoText/>
         </View>
         { mainOptions.map((item)=>(
             <Button

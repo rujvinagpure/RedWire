@@ -13,7 +13,9 @@ const SideDrawerCustom= (props )=>{
     return (
         <DrawerContentScrollView{...props}>
         <View>
-       <LogoText/>
+       <LogoText
+        style={{fontSize:40,textAlign:'center',color:Colors.black2}}
+       />
         </View>
         { mainOptions.map((item)=>(
             <Button

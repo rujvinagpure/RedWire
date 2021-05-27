@@ -11,10 +11,9 @@ import { createStackNavigator, HeaderTitle } from '@react-navigation/stack';
 import { Colors,LogoText }from '../utils/tools';
 import { Icon } from 'react-native-elements';
 import { useNavigation } from '@react-navigation/native';
-export const Stack= createStackNavigator();
 
 
-
+export const Stack = createStackNavigator();
 
 const LeftIcon = () => {
     const navigation = useNavigation()
@@ -53,7 +52,6 @@ export const VideosStack = () => (
         <Stack.Screen name="Videos_screen" component={VideosScreen} options={{
             headerLeft:(props)=> <LeftIcon/>,
         }}/>
-        <Stack.Screen name="Video_screen" component={VideoScreen}/>
     </Stack.Navigator>
 )
 

@@ -9,12 +9,12 @@ import { connect } from 'react-redux';
 import { StyleSheet, Text, View } from 'react-native';
 //import VideosScreen from './components/home/videos';
 import { Colors } from './utils/tools';
-
+import VideoScreen from './components/home/videos/video';
 
 
 const Drawer= createDrawerNavigator();
 
-import { Stack, HomeStack, VideosStack } from './routes/stacks';
+import { Stack, HomeStack, VideosStack, screenOptions } from './routes/stacks';
 import AuthScreen from './components/auth';
 //import ProfileScreen from '../src/components/user/profile';
 import ProfileScreen from './components/user/profile/profile';
@@ -31,19 +31,24 @@ const MainDrawer = () => (
 )
 
 class App extends Component{
-
-
-
   render(){
     return(
-<NavigationContainer>
-<Stack.Navigator>
+      <NavigationContainer>
+        <Stack.Navigator>
           { this.props.auth.isAuth ? 
             <>
               <Stack.Screen
                 name="Main"
                 component={ MainDrawer }
-                options ={{headerShown:false}}
+                options={{ headerShown:false}}
+              />
+              <Stack.Screen 
+                name="VideoScreen" 
+                component={ VideoScreen }
+                options={{
+                  ...screenOptions,
+                  headerBackTitleVisible:false
+                }}
               />
             </>
           :
@@ -53,7 +58,7 @@ class App extends Component{
             />
           }
         </Stack.Navigator>
-</NavigationContainer>
+      </NavigationContainer>
     )
   }
 }

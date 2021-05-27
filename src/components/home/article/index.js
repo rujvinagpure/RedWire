@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, ScrollView, ActivityIndicator } from 'react-native';
 import { Image } from 'react-native-elements'
-import ContentShow from '../../../../utils/contentShow';
+import ContentShow from '../../../utils/contentShow';
 
 const ArticleScreen = () => {
     return(

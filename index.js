@@ -12,15 +12,23 @@ const createStoreWithMiddleware = createStore(
     reducers,
     composeEnhancers(applyMiddleware(promiseMiddleware))
 )
+const toastConfig = {
+    info: (internalState) => (
+      <View style={{ height: 60, width: '100%', backgroundColor: 'pink' }}>
+        <Text>{internalState.text1}</Text>
+      </View>
+    )   
+}
 
 const reduxApp = () => (
     <Provider store={createStoreWithMiddleware}>
-       <PaperProvider theme={DarkTheme}>
-       <App/>
-       </PaperProvider>
-        
+        <PaperProvider>
+            <App/>
+            <Toast config={toastConfig} ref={(ref) => Toast.setRef(ref)} />
+        </PaperProvider>
     </Provider>
 )
+
 
 //AppRegistry.registerComponent(redwirre, () => reduxApp);
 AppRegistry.registerComponent('redwirre', () => reduxApp);

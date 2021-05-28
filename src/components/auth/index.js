@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native'
 
 import { Input, Button } from 'react-native-elements';
-import {registerUser,clearAuthError} from '../../store/actions'
+import {registerUser,clearAuthError,loginUser} from '../../store/actions'
 import {LogoText, Colors, showToast} from '../../utils/tools';
 
 const AuthScreen = () => {
@@ -23,6 +23,7 @@ const AuthScreen = () => {
             dispatch(registerUser(values));
         } else {
             // sign in
+            dispatch(loginUser(values))
         }
     }
 

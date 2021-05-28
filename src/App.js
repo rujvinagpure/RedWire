@@ -15,9 +15,12 @@ import VideoScreen from './components/home/videos/video';
 const Drawer= createDrawerNavigator();
 
 import { Stack, HomeStack, VideosStack, screenOptions } from './routes/stacks';
-import AuthScreen from './components/auth';
+import AuthScreen from './components/auth/index';
 //import ProfileScreen from '../src/components/user/profile';
 import ProfileScreen from './components/user/profile/profile';
+import Splash from './components/auth/splash';
+import autoSignIn from './store/actions';
+
 
 const MainDrawer = () => (
   <Drawer.Navigator
@@ -31,11 +34,22 @@ const MainDrawer = () => (
 )
 
 class App extends Component{
+  state = {
+    loading:true
+  }
+
+  componentDidMount(){
+    this.props.dispatch(autoSignIn()).then(()=>{
+      this.setState({loading:false})
+    })
+  }
+
+
   render(){
     return(
       <NavigationContainer>
         <Stack.Navigator>
-          { this.props.auth.isAuth ? 
+          { this.props.auth.isAuth ? (
             <>
               <Stack.Screen
                 name="Main"
@@ -51,11 +65,20 @@ class App extends Component{
                 }}
               />
             </>
-          :
+          ):(
+            this.state.loading ?
             <Stack.Screen
+              options={{ headerShown:false}}
+              name="Splash"
+              component={Splash}
+            />
+            :
+            <Stack.Screen
+              options={{ headerShown:false}}
               name="AuthScreen"
               component={AuthScreen}
             />
+          )
           }
         </Stack.Navigator>
       </NavigationContainer>

@@ -3,44 +3,53 @@ import {View, Text, StyleSheet} from 'react-native';
 import {DrawerContentScrollView} from '@react-navigation/drawer';
 import {Button} from 'react-native-elements';
 import {Colors, LogoText} from './tools';
-const SideDrawerCustom= (props )=>{
-    const mainOptions =[
-        {title: 'News', location:"Home"},
-        {title: 'Videos', location:"Videos"},
-        {title: 'Profile', location:"Profile"}
+
+
+import { useDispatch } from 'react-redux';
+import { logoutUser } from '../store/actions'
+
+
+const SideDrawerCustom = (props) => {
+    const dispatch = useDispatch();
+    const mainOptions = [
+        { title:'News',location:"Home" },
+        { title:'Videos',location:"Videos" },
+        { title:'Profile',location:"Profile" }
     ]
-    
-    return (
-        <DrawerContentScrollView{...props}>
-        <View>
-       <LogoText
-        style={{fontSize:40,textAlign:'center',color:Colors.black2}}
-       />
-        </View>
-        { mainOptions.map((item)=>(
+
+    return(
+        <DrawerContentScrollView {...props}>
+            <View>
+                <LogoText
+                    style={{fontSize:40,textAlign:'center',color:Colors.black2}}
+                />
+            </View>
+            { mainOptions.map((item)=>(
+                <Button
+                    key={item.location}
+                    title={item.title}
+                    onPress={()=> props.navigation.navigate(item.location)}
+                    buttonStyle={styles.drawerButon}
+                    titleStyle={{ width:'100%'}}
+                />
+            ))}
             <Button
-                key={item.location}
-                title={item.title}
-                onPress={()=> props.navigation.navigate(item.location)}
-                buttonStyle={styles.drawerButon}
-                titleStyle={{ width:'100%'}}
+                    title="Logout"
+                    onPress={()=> dispatch(logoutUser()) }
+                    buttonStyle={styles.drawerButon}
+                    titleStyle={{ width:'100%'}}
             />
-        ))}
-        <Button
-                title="Logout"
-                onPress={()=> alert('logout')}
-                buttonStyle={styles.drawerButon}
-                titleStyle={{ width:'100%'}}
-        />
-    </DrawerContentScrollView>
-)
+        </DrawerContentScrollView>
+    )
 }
 
 const styles = StyleSheet.create({
-drawerButon:{
-    backgroundColor: Colors.black,
-    borderBottomWidth:1,
-    borderBottomColor: Colors.black2,
-}
+    drawerButon:{
+        backgroundColor: Colors.black,
+        borderBottomWidth:1,
+        borderBottomColor: Colors.black2,
+    }
 })
+
+
 export default SideDrawerCustom;

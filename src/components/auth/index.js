@@ -3,22 +3,41 @@ import { View, StyleSheet, ScrollView } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { useDispatch, useSelector } from 'react-redux';
+import { useFocusEffect } from '@react-navigation/native'
 
 import { Input, Button } from 'react-native-elements';
-
+import {registerUser,clearAuthError} from '../../store/actions'
 import {LogoText, Colors, showToast} from '../../utils/tools';
 
 const AuthScreen = () => {
+    const dispatch = useDispatch();
+    const error = useSelector(state => state.auth.error )
     const [formType, setFormType] = useState(true)
     const [ securEntry,setSecurEntry] = useState(true);
+    const [loading, setLoading] = useState(false)
 
     const handleSubmit = (values) => {
-        alert(values)
+        setLoading(true)
+        if(formType){
+            // register
+            dispatch(registerUser(values));
+        } else {
+            // sign in
+        }
     }
 
     useEffect(()=>{
-      //  showToast('error','sorry','error msg')
-    },[])
+        if(error){
+            showToast('error','Sorry',error);
+            setLoading(false)
+        }
+    },[error])
+
+    useFocusEffect(
+        useCallback(()=>{
+            return () => dispatch(clearAuthError())
+        },[])
+    )
 
 
     return(
@@ -26,13 +45,13 @@ const AuthScreen = () => {
             <View style={styles.container}>
                 <LogoText/>
                 <Formik
-                    initialValues={{ email:'francis@gmail.com',password:'testing123'}}
+                    initialValues={{ email:'francis@gmail.com',password:'password123'}}
                     validationSchema={Yup.object({
                         email: Yup.string()
                         .email('Invalid email address')
                         .required('The email is required'),
                         password:Yup.string()
-                        .max(10,'Must be 10 or less')
+                        .max(20,'Must be 10 or less')
                         .required('The lastname is required')
                     })}
                     onSubmit={ values => handleSubmit(values)}
@@ -53,28 +72,27 @@ const AuthScreen = () => {
                             onChangeText={handleChange('email')}
                             onBlur={handleBlur('email')}
                             value={values.email}
-
                         />
                         <Input
-                             placeholder="Password"
-                             secureTextEntry={securEntry}
-                             leftIcon={{ type:'antdesign',name:'lock',color: Colors.white}}
-                             inputStyle={styles.inputStyle}
-                             placeholderTextColor={Colors.grey}
-                             inputContainerStyle={styles.inputContainerStyle}
-                             rightIcon={{
-                                 type:'antdesign',
-                                 name:securEntry ? 'eye':'eyeo',
-                                 onPress:()=> setSecurEntry(!securEntry)
-                             }}
- 
-                             renderErrorMessage={errors.password && touched.password}
-                             errorMessage={errors.password}
-                             errorStyle={{ color: Colors.black}}
- 
-                             onChangeText={handleChange('password')}
-                             onBlur={handleBlur('password')}
-                             value={values.password}
+                            placeholder="Password"
+                            secureTextEntry={securEntry}
+                            leftIcon={{ type:'antdesign',name:'lock',color: Colors.white}}
+                            inputStyle={styles.inputStyle}
+                            placeholderTextColor={Colors.grey}
+                            inputContainerStyle={styles.inputContainerStyle}
+                            rightIcon={{
+                                type:'antdesign',
+                                name:securEntry ? 'eye':'eyeo',
+                                onPress:()=> setSecurEntry(!securEntry)
+                            }}
+
+                            renderErrorMessage={errors.password && touched.password}
+                            errorMessage={errors.password}
+                            errorStyle={{ color: Colors.black}}
+
+                            onChangeText={handleChange('password')}
+                            onBlur={handleBlur('password')}
+                            value={values.password}
                         />
                         <Button
                             title={ formType ? 'Register':'Login'}
@@ -83,8 +101,8 @@ const AuthScreen = () => {
                                 marginTop:20
                             }}
                             titleStyle={{ width:'100%'}}
-                           // onPress={}
-                           // loading={}
+                            onPress={handleSubmit}
+                            loading={loading}
                         />
                          <Button
                             type="clear"

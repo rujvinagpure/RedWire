@@ -1,6 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/firestore';
-import 'firebase/auth'
+import 'firebase/auth';
 
 const config = {
     // apiKey: "AIzaSyCucE33mJSLmzXWXxV_7rkOaJW4IpT8lM0",
@@ -13,6 +13,7 @@ const config = {
     // measurementId: "G-G1X4RD6N0X"
     apiKey: "AIzaSyBcSvMuGRPod_P_wTc00wAuEbPRgNlTMCI",
     authDomain: "redwire-446fb.firebaseapp.com",
+    databaseURL: "https://redwire-446fb.firebaseio.com",
     projectId: "redwire-446fb",
     storageBucket: "redwire-446fb.appspot.com",
     messagingSenderId: "453001559100",
@@ -21,7 +22,7 @@ const config = {
 }
 
 firebase.initializeApp(config);
-
+firebase.analytics();
 const DB = firebase.firestore();
 const usersCollection = DB.collection('users');
 

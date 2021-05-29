@@ -19,7 +19,7 @@ import AuthScreen from './components/auth/index';
 //import ProfileScreen from '../src/components/user/profile';
 import ProfileScreen from './components/user/profile/profile';
 import Splash from './components/auth/splash';
-import autoSignIn from './store/actions';
+import {autoSignIn} from './store/actions';
 
 
 const MainDrawer = () => (
